@@ -105,7 +105,18 @@ const Tab1: React.FC = () => {
               );
             }}
           >
-            <ZoomControl style={{ left: 20, top: 50 }} />
+            <ZoomControl
+              style={{
+                left: 20,
+                top: 50,
+              }}
+              buttonStyle={{
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                width: "40px",
+                margin: "4px",
+              }}
+            />
             {positionState.records.length > 0 &&
               positionState.records.map((el, i) => (
                 <Marker
