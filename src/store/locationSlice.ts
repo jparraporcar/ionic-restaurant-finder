@@ -25,6 +25,7 @@ interface PositionState {
 const initialState = {
   latitude: undefined,
   longitude: undefined,
+  records: [],
 } as PositionState;
 
 export const areaSelectedSlice = createSlice({
