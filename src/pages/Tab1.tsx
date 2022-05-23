@@ -8,11 +8,10 @@ import {
   IonTitle,
   IonToolbar,
   IonLoading,
-  IonPopover,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Tab1.css";
-import { Map, Marker, ZoomControl } from "pigeon-maps";
+import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
 import { useCallback, useEffect, useState } from "react";
 import { flashOutline, listOutline, flashOff } from "ionicons/icons";
 import { getPosition } from "../utils/getPosition";
@@ -20,6 +19,8 @@ import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setPosition, setRecords } from "../store/locationSlice";
 import { maptiler } from "pigeon-maps/providers";
+import { Record } from "../store/locationSlice";
+import MapOverlay from "../components/MapOverlay";
 
 type Coordinates = [number, number] | null;
 
@@ -27,10 +28,6 @@ const Tab1: React.FC = () => {
   const [zoom, setZoom] = useState(15);
   const [newPositionMode, setNewPositionMode] = useState<boolean>(false);
   const [newAnchor, setNewAnchor] = useState<Coordinates>(null);
-  const [popoverState, setShowPopover] = useState<{
-    showPopover: boolean;
-    event: Event | null;
-  }>({ showPopover: false, event: null });
   const positionState = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const maptileProvider = maptiler("d5JQJPLLuap8TkJJlTdJ", "streets");
@@ -107,6 +104,20 @@ const Tab1: React.FC = () => {
     );
   };
 
+  const showInfoHandler = (index: number) => {
+    const tempRecords = JSON.parse(JSON.stringify(positionState.records));
+    !tempRecords[index].showInfo &&
+      tempRecords.map((record: any) => (record.showInfo = false));
+    tempRecords[index].showInfo = !tempRecords[index].showInfo;
+    dispatch(
+      setRecords({
+        latitude: positionState.latitude,
+        longitude: positionState.longitude,
+        records: tempRecords,
+      })
+    );
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -157,27 +168,33 @@ const Tab1: React.FC = () => {
                 color="red"
               />
             )}
-            <IonPopover
-              showBackdrop={false}
-              event={popoverState.event}
-              isOpen={popoverState.showPopover}
-              onDidDismiss={() =>
-                setShowPopover({ showPopover: false, event: null })
+
+            {positionState.records.map((record, index) => {
+              if (record.showInfo) {
+                return (
+                  <Overlay
+                    className="marker-overlay"
+                    key={index}
+                    anchor={[record.latitude, record.longitude]}
+                    offset={[105, 14]}
+                  >
+                    <MapOverlay />
+                  </Overlay>
+                );
               }
-            >
-              <p>This is popover content</p>
-            </IonPopover>
+              return;
+            })}
+
             {positionState.records.length > 0 &&
-              positionState.records.map((el, i) => (
+              positionState.records.map((el, index) => (
                 <Marker
-                  key={i}
+                  key={index}
+                  payload={index}
                   width={50}
                   anchor={[el.latitude, el.longitude]}
-                  onClick={(event) => {
-                    event.event.persist();
-                    console.log("within the marker event");
-                    setShowPopover({ showPopover: true, event: event.event });
-                  }}
+                  onClick={({ event, anchor, payload }) =>
+                    showInfoHandler(payload)
+                  }
                 />
               ))}
           </Map>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Record {
+export interface Record {
+  showInfo: boolean | undefined;
   alias: string;
   displayAddress: string;
   distance: string;
