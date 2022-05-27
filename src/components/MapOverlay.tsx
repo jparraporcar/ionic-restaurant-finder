@@ -9,29 +9,30 @@ import {
   IonRow,
   IonText,
 } from "@ionic/react";
+import "./MapOverlay.css";
 import {
   paperPlaneOutline,
   callOutline,
   arrowForwardOutline,
+  recording,
 } from "ionicons/icons";
-
-import "./MapOverlay.css";
+import { Record } from "../store/locationSlice";
 
 interface IMapOverlay {
-  //...
+  record: Record;
 }
 
 const MapOverlay = (props: IMapOverlay) => {
   return (
     <IonCard className="card-main">
       <IonText>
-        <h1 className="card-main__business-name">Name of business</h1>
+        <h1 className="card-main__business-name">{props.record.name}</h1>
       </IonText>
       <IonText>
-        <h3>Address of business</h3>
+        <h3>{props.record.displayAddress}</h3>
       </IonText>
       <IonText>
-        <h1 className="card-main__rating">4.5 star rating</h1>
+        <h1 className="card-main__rating">{`${props.record.rating} star rating`}</h1>
       </IonText>
       <IonGrid className="ion ion-no-margin ion-no-padding">
         <IonRow>
@@ -44,7 +45,7 @@ const MapOverlay = (props: IMapOverlay) => {
                 slot="start"
               />
               <IonText>
-                <h4>0.39 miles away</h4>
+                <h4>{`${props.record.distance} miles away`}</h4>
               </IonText>
             </IonItem>
           </IonCol>
@@ -57,7 +58,7 @@ const MapOverlay = (props: IMapOverlay) => {
                 slot="start"
               />
               <IonText>
-                <h4>696696696</h4>
+                <h4>{props.record.phone}</h4>
               </IonText>
             </IonItem>
           </IonCol>

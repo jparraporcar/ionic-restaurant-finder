@@ -12,16 +12,17 @@ h4 {
 }
 
 h1 {
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
+  margin-top: 5px !important;
 }
 
 h3 {
-  font-size: 0.8rem;
+  font-size: 0.8rem !important;
 }
 
 h4 {
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
 }
 
 .card-main__business-name {
@@ -35,7 +36,7 @@ h4 {
   border-radius: 10px;
   margin-top: 10px;
   padding: 2px;
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
 }
 
 ion-item::part(native) {

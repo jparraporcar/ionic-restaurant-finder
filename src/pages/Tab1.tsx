@@ -8,9 +8,11 @@ import {
   IonTitle,
   IonToolbar,
   IonLoading,
+  IonModal,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Tab1.css";
+import "../components/MapOverlay.css";
 import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
 import { useCallback, useEffect, useState } from "react";
 import { flashOutline, listOutline, flashOff } from "ionicons/icons";
@@ -21,6 +23,7 @@ import { setPosition, setRecords } from "../store/locationSlice";
 import { maptiler } from "pigeon-maps/providers";
 import { Record } from "../store/locationSlice";
 import MapOverlay from "../components/MapOverlay";
+import SheetModalBody from "../components/SheetModalBody";
 
 type Coordinates = [number, number] | null;
 
@@ -28,6 +31,7 @@ const Tab1: React.FC = () => {
   const [zoom, setZoom] = useState(15);
   const [newPositionMode, setNewPositionMode] = useState<boolean>(false);
   const [newAnchor, setNewAnchor] = useState<Coordinates>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const positionState = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const maptileProvider = maptiler("d5JQJPLLuap8TkJJlTdJ", "streets");
@@ -37,6 +41,7 @@ const Tab1: React.FC = () => {
       return !prevState;
     });
 
+  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
   const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
@@ -118,6 +123,11 @@ const Tab1: React.FC = () => {
     );
   };
 
+  const closeModalHandler = () => {
+    console.log("clicked");
+    setShowModal(false);
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -178,11 +188,11 @@ const Tab1: React.FC = () => {
                     anchor={[record.latitude, record.longitude]}
                     offset={[105, 14]}
                   >
-                    <MapOverlay />
+                    <MapOverlay record={record} />
                   </Overlay>
                 );
               }
-              return;
+              return "";
             })}
 
             {positionState.records.length > 0 &&
@@ -200,7 +210,9 @@ const Tab1: React.FC = () => {
           </Map>
         )}
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
-          <IonFabButton>
+          <IonFabButton
+            onClick={() => setShowModal((prevState: any) => !prevState)}
+          >
             <IonIcon icon={listOutline} />
           </IonFabButton>
         </IonFab>
@@ -209,6 +221,20 @@ const Tab1: React.FC = () => {
             <IonIcon icon={newPositionMode ? flashOff : flashOutline} />
           </IonFabButton>
         </IonFab>
+        <IonModal
+          isOpen={showModal}
+          canDismiss={true}
+          backdropBreakpoint={0.3}
+          backdropDismiss={true}
+          initialBreakpoint={0.2}
+          breakpoints={[0.2, 0.6, 1]}
+          onDidDismiss={() => setShowModal(false)}
+        >
+          <SheetModalBody
+            records={positionState.records}
+            onCustomClick={closeModalHandler}
+          />
+        </IonModal>
       </IonContent>
     </IonPage>
   );
