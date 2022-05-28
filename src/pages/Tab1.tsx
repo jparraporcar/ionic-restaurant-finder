@@ -41,8 +41,8 @@ const Tab1: React.FC = () => {
       return !prevState;
     });
 
-  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
-  const baseUrl = "http://localhost:4000";
+  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  // const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     console.log("...fetching and setting...");
@@ -50,6 +50,8 @@ const Tab1: React.FC = () => {
       const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
+          // latitude: 40.8264691,
+          // longitude: -73.9549618,
           latitude: fetchedPosition.coords.latitude,
           longitude: fetchedPosition.coords.longitude,
           records: [],
@@ -210,9 +212,7 @@ const Tab1: React.FC = () => {
           </Map>
         )}
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
-          <IonFabButton
-            onClick={() => setShowModal((prevState: any) => !prevState)}
-          >
+          <IonFabButton onClick={() => setShowModal(true)}>
             <IonIcon icon={listOutline} />
           </IonFabButton>
         </IonFab>
@@ -222,18 +222,13 @@ const Tab1: React.FC = () => {
           </IonFabButton>
         </IonFab>
         <IonModal
+          breakpoints={[0, 0.2, 0.5, 1]}
+          initialBreakpoint={0.5}
+          backdropBreakpoint={0.2}
           isOpen={showModal}
-          canDismiss={true}
-          backdropBreakpoint={0.3}
-          backdropDismiss={true}
-          initialBreakpoint={0.2}
-          breakpoints={[0.2, 0.6, 1]}
           onDidDismiss={() => setShowModal(false)}
         >
-          <SheetModalBody
-            records={positionState.records}
-            onCustomClick={closeModalHandler}
-          />
+          <SheetModalBody records={positionState.records} />
         </IonModal>
       </IonContent>
     </IonPage>
