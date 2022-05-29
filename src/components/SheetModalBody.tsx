@@ -5,8 +5,12 @@ import {
   IonGrid,
   IonRow,
   IonSearchbar,
+  SearchbarChangeEventDetail,
+  SearchbarCustomEvent,
 } from "@ionic/react";
-import { Record } from "../store/locationSlice";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Record, setFiltered } from "../store/locationSlice";
 import SingleRecord from "./SingleRecord";
 
 interface ISheetModalBodyProps {
@@ -14,13 +18,25 @@ interface ISheetModalBodyProps {
   closeModal: () => void;
 }
 
-const sheetModalBody = (props: ISheetModalBodyProps) => {
+const SheetModalBody = (props: ISheetModalBodyProps) => {
+  const [searchText, setSearchText] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const searchHandler = (event: CustomEvent<SearchbarChangeEventDetail>) => {
+    setSearchText(event.detail.value!);
+  };
+
+  useEffect(() => {
+    dispatch(setFiltered(searchText));
+    console.log("executing useEffect 3");
+  }, [searchText]);
+
   return (
     <>
       <IonGrid className="ion-no-margin">
         <IonRow className="ion-align-items-center ion-justify-content-between">
           <IonCol className="ion-no-margin">
-            <IonSearchbar />
+            <IonSearchbar value={searchText} onIonChange={searchHandler} />
           </IonCol>
         </IonRow>
         <IonRow>
@@ -42,4 +58,4 @@ const sheetModalBody = (props: ISheetModalBodyProps) => {
   );
 };
 
-export default sheetModalBody;
+export default SheetModalBody;

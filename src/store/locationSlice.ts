@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { recording } from "ionicons/icons";
 
 export interface Record {
   showInfo: boolean | undefined;
@@ -21,6 +22,7 @@ interface PositionState {
   latitude: number | undefined;
   longitude: number | undefined;
   records: Record[];
+  filterSearchText?: string;
 }
 
 const initialState = {
@@ -44,8 +46,23 @@ export const areaSelectedSlice = createSlice({
       state = { ...state, records };
       return state;
     },
+
+    setFiltered: (state, action: PayloadAction<string>) => {
+      const textFilter = action.payload;
+      if (textFilter.trim() !== "") {
+        const filteredRecords = state.records.filter((record) => {
+          return record.name.includes(textFilter);
+        });
+        console.log(state);
+        return (state = { ...state, records: filteredRecords });
+      } else {
+        console.log(state);
+        return;
+      }
+    },
   },
 });
 
-export const { setPosition, setRecords } = areaSelectedSlice.actions;
+export const { setPosition, setRecords, setFiltered } =
+  areaSelectedSlice.actions;
 export default areaSelectedSlice.reducer;
