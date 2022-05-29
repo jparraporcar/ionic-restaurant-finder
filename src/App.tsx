@@ -2,7 +2,6 @@ import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
@@ -11,8 +10,8 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { mapOutline, listOutline } from "ionicons/icons";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
+import MapMain from "./pages/MapMain";
+import RecordsList from "./pages/RecordsList";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -41,10 +40,13 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/map">
-            <Tab1 />
+            <MapMain />
           </Route>
+          {/* <Route exact path="/list/:id">
+            <RecordDetails />
+          </Route> */}
           <Route exact path="/list">
-            <Tab2 />
+            <RecordsList />
           </Route>
           <Route exact path="/">
             <Redirect to="/map" />

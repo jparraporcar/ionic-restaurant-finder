@@ -5,13 +5,11 @@ import {
   IonHeader,
   IonIcon,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonLoading,
   IonModal,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Tab1.css";
+import "./MapMain.css";
 import "../components/MapOverlay.css";
 import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
 import { useCallback, useEffect, useState } from "react";
@@ -27,7 +25,7 @@ import SheetModalBody from "../components/SheetModalBody";
 
 type Coordinates = [number, number] | null;
 
-const Tab1: React.FC = () => {
+const MapMain: React.FC = () => {
   const [zoom, setZoom] = useState(15);
   const [newPositionMode, setNewPositionMode] = useState<boolean>(false);
   const [newAnchor, setNewAnchor] = useState<Coordinates>(null);
@@ -41,8 +39,8 @@ const Tab1: React.FC = () => {
       return !prevState;
     });
 
-  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
-  // const baseUrl = "http://localhost:4000";
+  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     console.log("...fetching and setting...");
@@ -126,7 +124,6 @@ const Tab1: React.FC = () => {
   };
 
   const closeModalHandler = () => {
-    console.log("clicked");
     setShowModal(false);
   };
 
@@ -222,17 +219,20 @@ const Tab1: React.FC = () => {
           </IonFabButton>
         </IonFab>
         <IonModal
-          breakpoints={[0, 0.2, 0.5, 1]}
-          initialBreakpoint={0.5}
-          backdropBreakpoint={0.2}
+          breakpoints={[0, 0.6, 1]}
+          initialBreakpoint={0.6}
+          backdropBreakpoint={0.6}
           isOpen={showModal}
-          onDidDismiss={() => setShowModal(false)}
+          onDidDismiss={closeModalHandler}
         >
-          <SheetModalBody records={positionState.records} />
+          <SheetModalBody
+            records={positionState.records}
+            closeModal={closeModalHandler}
+          />
         </IonModal>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab1;
+export default MapMain;
