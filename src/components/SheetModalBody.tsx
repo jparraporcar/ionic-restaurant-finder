@@ -9,27 +9,42 @@ import {
   SearchbarCustomEvent,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Record, setFiltered } from "../store/locationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Record, setResults } from "../store/locationSlice";
+import { RootState } from "../store/store";
 import SingleRecord from "./SingleRecord";
 
 interface ISheetModalBodyProps {
-  records: Record[];
+  results: Record[];
   closeModal: () => void;
 }
 
 const SheetModalBody = (props: ISheetModalBodyProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const dispatch = useDispatch();
+  const recordsState = useSelector((state: RootState) => state.records);
+  const resultsState = useSelector((state: RootState) => state.results);
 
   const searchHandler = (event: CustomEvent<SearchbarChangeEventDetail>) => {
     setSearchText(event.detail.value!);
   };
 
   useEffect(() => {
-    dispatch(setFiltered(searchText));
-    console.log("executing useEffect 3");
-  }, [searchText]);
+    let filteredRecords: Record[] = [];
+
+    if (searchText.trim().toLowerCase() !== "") {
+      recordsState.forEach((record: Record) => {
+        if (
+          record.name.toLowerCase().includes(searchText.trim().toLowerCase())
+        ) {
+          filteredRecords.push(record);
+        }
+      });
+      dispatch(setResults(filteredRecords));
+    } else {
+      dispatch(setResults(recordsState));
+    }
+  }, [searchText, dispatch]);
 
   return (
     <>
@@ -41,12 +56,12 @@ const SheetModalBody = (props: ISheetModalBodyProps) => {
         </IonRow>
         <IonRow>
           <div style={{ overflow: "scroll", height: "90vh" }}>
-            {props.records.map((record, index) => {
+            {props.results.map((result, index) => {
               return (
                 <SingleRecord
                   key={index}
-                  id={record.id}
-                  record={record}
+                  id={result.id}
+                  record={result}
                   onCustomClick={props.closeModal}
                 />
               );

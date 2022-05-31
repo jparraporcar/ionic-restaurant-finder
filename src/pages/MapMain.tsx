@@ -17,7 +17,7 @@ import { flashOutline, listOutline, flashOff } from "ionicons/icons";
 import { getPosition } from "../utils/getPosition";
 import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setPosition, setRecords } from "../store/locationSlice";
+import { setPosition, setRecords, setResults } from "../store/locationSlice";
 import { maptiler } from "pigeon-maps/providers";
 import { Record } from "../store/locationSlice";
 import MapOverlay from "../components/MapOverlay";
@@ -43,16 +43,12 @@ const MapMain: React.FC = () => {
   const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
-    console.log("...fetching and setting...");
     try {
-      const fetchedPosition = await getPosition();
+      // const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
-          // latitude: 40.8264691,
-          // longitude: -73.9549618,
-          latitude: fetchedPosition.coords.latitude,
-          longitude: fetchedPosition.coords.longitude,
-          records: [],
+          latitude: 40.8264691,
+          longitude: -73.9549618,
         })
       );
     } catch (err) {
@@ -61,7 +57,6 @@ const MapMain: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("executing useEffect 1...");
     fetchAndSetPosition();
   }, [fetchAndSetPosition]);
 
@@ -71,18 +66,12 @@ const MapMain: React.FC = () => {
         `${baseUrl}/get-records?latitude=${positionState.latitude}&longitude=${positionState.longitude}&radius=3000`
       );
       const response = await data.json();
-      dispatch(
-        setRecords({
-          latitude: positionState.latitude,
-          longitude: positionState.longitude,
-          records: response.allRecords,
-        })
-      );
+      dispatch(setRecords(response.allRecords));
+      dispatch(setResults(response.allRecords));
     }
   }, [positionState.latitude, positionState.longitude, dispatch]);
 
   useEffect(() => {
-    console.log("executing useEffect 2...");
     fetchAndSetRecords();
   }, [fetchAndSetRecords]);
 
@@ -104,23 +93,16 @@ const MapMain: React.FC = () => {
       setPosition({
         latitude: latLng[0],
         longitude: latLng[1],
-        records: positionState.records,
       })
     );
   };
 
   const showInfoHandler = (index: number) => {
-    const tempRecords = JSON.parse(JSON.stringify(positionState.records));
-    !tempRecords[index].showInfo &&
-      tempRecords.map((record: any) => (record.showInfo = false));
-    tempRecords[index].showInfo = !tempRecords[index].showInfo;
-    dispatch(
-      setRecords({
-        latitude: positionState.latitude,
-        longitude: positionState.longitude,
-        records: tempRecords,
-      })
-    );
+    const tempResults = JSON.parse(JSON.stringify(positionState.results));
+    !tempResults[index].showInfo &&
+      tempResults.map((result: any) => (result.showInfo = false));
+    tempResults[index].showInfo = !tempResults[index].showInfo;
+    dispatch(setResults(tempResults));
   };
 
   const closeModalHandler = () => {
@@ -141,22 +123,6 @@ const MapMain: React.FC = () => {
             center={[positionState.latitude!, positionState.longitude!]}
             zoom={zoom}
             onClick={onClickSetPosition}
-            onBoundsChanged={({ center, zoom }) => {
-              if (newPositionMode) {
-                return;
-              }
-              setNewAnchor(null);
-              const updatedLatitude = center[0];
-              const udpatedLongitude = center[1];
-              setZoom(zoom);
-              dispatch(
-                setPosition({
-                  latitude: updatedLatitude,
-                  longitude: udpatedLongitude,
-                  records: positionState.records,
-                })
-              );
-            }}
           >
             <ZoomControl
               style={{
@@ -178,34 +144,33 @@ const MapMain: React.FC = () => {
               />
             )}
 
-            {positionState.records.map((record, index) => {
-              if (record.showInfo) {
+            {positionState.results.map((result, index) => {
+              if (result.showInfo) {
                 return (
                   <Overlay
                     className="marker-overlay"
                     key={index}
-                    anchor={[record.latitude, record.longitude]}
+                    anchor={[result.latitude, result.longitude]}
                     offset={[105, 14]}
                   >
-                    <MapOverlay record={record} />
+                    <MapOverlay record={result} />
                   </Overlay>
                 );
               }
               return "";
             })}
 
-            {positionState.records.length > 0 &&
-              positionState.records.map((el, index) => (
-                <Marker
-                  key={index}
-                  payload={index}
-                  width={50}
-                  anchor={[el.latitude, el.longitude]}
-                  onClick={({ event, anchor, payload }) =>
-                    showInfoHandler(payload)
-                  }
-                />
-              ))}
+            {positionState.results.map((el, index) => (
+              <Marker
+                key={index}
+                payload={index}
+                width={50}
+                anchor={[el.latitude, el.longitude]}
+                onClick={({ event, anchor, payload }) =>
+                  showInfoHandler(payload)
+                }
+              />
+            ))}
           </Map>
         )}
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
@@ -219,14 +184,14 @@ const MapMain: React.FC = () => {
           </IonFabButton>
         </IonFab>
         <IonModal
-          breakpoints={[0, 0.6, 1]}
-          initialBreakpoint={0.6}
-          backdropBreakpoint={0.6}
+          breakpoints={[0, 0.5, 1]}
+          initialBreakpoint={0.5}
+          backdropBreakpoint={0.5}
           isOpen={showModal}
           onDidDismiss={closeModalHandler}
         >
           <SheetModalBody
-            records={positionState.records}
+            results={positionState.results}
             closeModal={closeModalHandler}
           />
         </IonModal>
