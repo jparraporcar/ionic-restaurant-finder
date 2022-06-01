@@ -2,13 +2,12 @@ import {
   IonContent,
   IonFab,
   IonFabButton,
-  IonHeader,
   IonIcon,
   IonPage,
   IonLoading,
   IonModal,
+  useIonViewDidLeave,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./MapMain.css";
 import "../components/MapOverlay.css";
 import { Map, Marker, Overlay, ZoomControl } from "pigeon-maps";
@@ -19,36 +18,38 @@ import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setPosition, setRecords, setResults } from "../store/locationSlice";
 import { maptiler } from "pigeon-maps/providers";
-import { Record } from "../store/locationSlice";
 import MapOverlay from "../components/MapOverlay";
 import SheetModalBody from "../components/SheetModalBody";
+import { useHistory } from "react-router";
 
 type Coordinates = [number, number] | null;
 
-const MapMain: React.FC = () => {
+const MapMain: React.FC = (props) => {
   const [zoom, setZoom] = useState(15);
   const [newPositionMode, setNewPositionMode] = useState<boolean>(false);
   const [newAnchor, setNewAnchor] = useState<Coordinates>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const positionState = useSelector((state: RootState) => state);
+  const history = useHistory();
   const dispatch = useDispatch();
   const maptileProvider = maptiler("d5JQJPLLuap8TkJJlTdJ", "streets");
-
   const toggleNewLocation = () =>
     setNewPositionMode((prevState) => {
       return !prevState;
     });
 
-  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
-  const baseUrl = "http://localhost:4000";
+  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  // const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     try {
-      // const fetchedPosition = await getPosition();
+      const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
-          latitude: 40.8264691,
-          longitude: -73.9549618,
+          // latitude: 40.8264691,
+          // longitude: -73.9549618,
+          latitude: fetchedPosition.coords.latitude,
+          longitude: fetchedPosition.coords.longitude,
         })
       );
     } catch (err) {
@@ -108,12 +109,18 @@ const MapMain: React.FC = () => {
   const closeModalHandler = () => {
     setShowModal(false);
   };
+  console.log(positionState);
+  useIonViewDidLeave(() => {
+    if (positionState) {
+      history.push({ pathname: "/list", state: positionState.records });
+    }
+  });
 
   return (
     <IonPage>
       <IonContent fullscreen>
-        {!(positionState.latitude && positionState.longitude) ? (
-          <p>...Loading</p>
+        {!positionState.latitude ? (
+          <IonLoading isOpen={!positionState.latitude ? true : false} />
         ) : (
           <Map
             provider={maptileProvider}
@@ -184,9 +191,9 @@ const MapMain: React.FC = () => {
           </IonFabButton>
         </IonFab>
         <IonModal
-          breakpoints={[0, 0.5, 1]}
-          initialBreakpoint={0.5}
-          backdropBreakpoint={0.5}
+          breakpoints={[0, 0.3, 0.6, 1]}
+          initialBreakpoint={0.3}
+          backdropBreakpoint={0.6}
           isOpen={showModal}
           onDidDismiss={closeModalHandler}
         >

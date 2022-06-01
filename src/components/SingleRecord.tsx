@@ -15,7 +15,8 @@ import "./SingleRecord.css";
 interface ISingleRecord {
   record: Record;
   id: string;
-  onCustomClick: () => void;
+  onCustomClick?: () => void;
+  imageURL?: string;
 }
 
 const SingleRecord: React.FC<ISingleRecord> = (props) => {
@@ -24,7 +25,14 @@ const SingleRecord: React.FC<ISingleRecord> = (props) => {
       type="button"
       routerLink={`/list/${props.id}`}
       onClick={props.onCustomClick}
+      style={props.imageURL ? { height: "400px" } : {}} //
     >
+      {props.imageURL ? (
+        <img
+          src={props.record.imageURL}
+          style={{ height: "250px", width: "100%" }}
+        />
+      ) : null}
       <IonCardSubtitle className="ion-margin">
         {props.record.name}
       </IonCardSubtitle>

@@ -1,12 +1,9 @@
 import {
-  IonButton,
   IonCol,
-  IonContent,
   IonGrid,
   IonRow,
   IonSearchbar,
   SearchbarChangeEventDetail,
-  SearchbarCustomEvent,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +20,6 @@ const SheetModalBody = (props: ISheetModalBodyProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const dispatch = useDispatch();
   const recordsState = useSelector((state: RootState) => state.records);
-  const resultsState = useSelector((state: RootState) => state.results);
 
   const searchHandler = (event: CustomEvent<SearchbarChangeEventDetail>) => {
     setSearchText(event.detail.value!);
@@ -31,12 +27,11 @@ const SheetModalBody = (props: ISheetModalBodyProps) => {
 
   useEffect(() => {
     let filteredRecords: Record[] = [];
+    const search = searchText.trim().toLowerCase();
 
-    if (searchText.trim().toLowerCase() !== "") {
+    if (search !== "") {
       recordsState.forEach((record: Record) => {
-        if (
-          record.name.toLowerCase().includes(searchText.trim().toLowerCase())
-        ) {
+        if (record.name.toLowerCase().includes(search)) {
           filteredRecords.push(record);
         }
       });
@@ -44,7 +39,7 @@ const SheetModalBody = (props: ISheetModalBodyProps) => {
     } else {
       dispatch(setResults(recordsState));
     }
-  }, [searchText, dispatch]);
+  }, [searchText, recordsState, dispatch]);
 
   return (
     <>

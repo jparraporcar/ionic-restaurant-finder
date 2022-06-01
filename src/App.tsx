@@ -42,14 +42,11 @@ const App: React.FC = () => (
           <Route exact path="/map">
             <MapMain />
           </Route>
-          {/* <Route exact path="/list/:id">
-            <RecordDetails />
-          </Route> */}
           <Route exact path="/list">
             <RecordsList />
           </Route>
           <Route exact path="/">
-            <Redirect to="/map" />
+            <Redirect to="/map" exact />
           </Route>
         </IonRouterOutlet>
         <IonTabBar color="primary" slot="bottom">

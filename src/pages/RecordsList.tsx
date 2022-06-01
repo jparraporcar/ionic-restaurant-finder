@@ -5,24 +5,37 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
+import { useSelector } from "react-redux";
+import SingleRecord from "../components/SingleRecord";
+import { RootState } from "../store/store";
 import "./RecordsList.css";
 
 const RecordsList: React.FC = () => {
+  const recordsState = useSelector((state: RootState) => state.records);
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>All places in your location</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">Feeling hungry?</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
+        {recordsState.map((record, index) => {
+          return (
+            <SingleRecord
+              key={index}
+              id={record.id}
+              record={record}
+              imageURL={record.imageURL}
+            />
+          );
+        })}
       </IonContent>
     </IonPage>
   );

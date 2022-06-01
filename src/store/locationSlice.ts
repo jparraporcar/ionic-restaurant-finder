@@ -7,7 +7,7 @@ export interface Record {
   displayAddress: string;
   distance: string;
   id: string;
-  imageUrl: string;
+  imageURL: string;
   isOpen: boolean;
   latitude: number;
   longitude: number;
