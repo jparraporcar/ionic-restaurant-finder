@@ -1,3 +1,11 @@
 .icon-paperplane {
   color: var(--ion-color-primary);
 }
+
+.container-star {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: baseline;
+  margin: 16px;
+}

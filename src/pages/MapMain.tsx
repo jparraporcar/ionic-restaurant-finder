@@ -6,7 +6,6 @@ import {
   IonPage,
   IonLoading,
   IonModal,
-  useIonViewDidLeave,
 } from "@ionic/react";
 import "./MapMain.css";
 import "../components/MapOverlay.css";
@@ -20,17 +19,17 @@ import { setPosition, setRecords, setResults } from "../store/locationSlice";
 import { maptiler } from "pigeon-maps/providers";
 import MapOverlay from "../components/MapOverlay";
 import SheetModalBody from "../components/SheetModalBody";
-import { useHistory } from "react-router";
 
 type Coordinates = [number, number] | null;
 
 const MapMain: React.FC = (props) => {
-  const [zoom, setZoom] = useState(15);
+  const [zoom, setZoom] = useState(14);
   const [newPositionMode, setNewPositionMode] = useState<boolean>(false);
   const [newAnchor, setNewAnchor] = useState<Coordinates>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const positionState = useSelector((state: RootState) => state);
-  const history = useHistory();
+  const positionState = useSelector(
+    (state: RootState) => state.locationReducer
+  );
   const dispatch = useDispatch();
   const maptileProvider = maptiler("d5JQJPLLuap8TkJJlTdJ", "streets");
   const toggleNewLocation = () =>
@@ -38,18 +37,18 @@ const MapMain: React.FC = (props) => {
       return !prevState;
     });
 
-  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
-  // const baseUrl = "http://localhost:4000";
+  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     try {
-      const fetchedPosition = await getPosition();
+      // const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
-          // latitude: 40.8264691,
-          // longitude: -73.9549618,
-          latitude: fetchedPosition.coords.latitude,
-          longitude: fetchedPosition.coords.longitude,
+          latitude: 40.8264691,
+          longitude: -73.9549618,
+          // latitude: fetchedPosition.coords.latitude,
+          // longitude: fetchedPosition.coords.longitude,
         })
       );
     } catch (err) {
@@ -64,7 +63,7 @@ const MapMain: React.FC = (props) => {
   const fetchAndSetRecords = useCallback(async () => {
     if (positionState.latitude && positionState.longitude) {
       const data = await fetch(
-        `${baseUrl}/get-records?latitude=${positionState.latitude}&longitude=${positionState.longitude}&radius=3000`
+        `${baseUrl}/get-records?latitude=${positionState.latitude}&longitude=${positionState.longitude}&radius=1000`
       );
       const response = await data.json();
       dispatch(setRecords(response.allRecords));
@@ -109,12 +108,6 @@ const MapMain: React.FC = (props) => {
   const closeModalHandler = () => {
     setShowModal(false);
   };
-  console.log(positionState);
-  useIonViewDidLeave(() => {
-    if (positionState) {
-      history.push({ pathname: "/list", state: positionState.records });
-    }
-  });
 
   return (
     <IonPage>

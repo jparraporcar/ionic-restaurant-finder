@@ -19,7 +19,9 @@ interface ISheetModalBodyProps {
 const SheetModalBody = (props: ISheetModalBodyProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const dispatch = useDispatch();
-  const recordsState = useSelector((state: RootState) => state.records);
+  const recordsState = useSelector(
+    (state: RootState) => state.locationReducer.records
+  );
 
   const searchHandler = (event: CustomEvent<SearchbarChangeEventDetail>) => {
     setSearchText(event.detail.value!);

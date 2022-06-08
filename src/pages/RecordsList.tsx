@@ -11,7 +11,9 @@ import { RootState } from "../store/store";
 import "./RecordsList.css";
 
 const RecordsList: React.FC = () => {
-  const recordsState = useSelector((state: RootState) => state.records);
+  const recordsState = useSelector(
+    (state: RootState) => state.locationReducer.records
+  );
 
   return (
     <IonPage>

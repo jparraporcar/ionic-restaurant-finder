@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, current, Action } from "@reduxjs/toolkit";
-import { recording } from "ionicons/icons";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Record {
   showInfo: boolean | undefined;

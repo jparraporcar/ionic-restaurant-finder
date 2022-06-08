@@ -5,7 +5,6 @@ import {
   IonGrid,
   IonIcon,
   IonItem,
-  IonLabel,
   IonRow,
   IonText,
 } from "@ionic/react";
@@ -14,7 +13,6 @@ import {
   paperPlaneOutline,
   callOutline,
   arrowForwardOutline,
-  recording,
 } from "ionicons/icons";
 import { Record } from "../store/locationSlice";
 

@@ -31,6 +31,8 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import RecordDetails from "./pages/RecordDetails";
+import "./App.css";
 
 setupIonicReact();
 
@@ -45,16 +47,35 @@ const App: React.FC = () => (
           <Route exact path="/list">
             <RecordsList />
           </Route>
+          <Route exact path="/list/:id">
+            <RecordDetails />
+          </Route>
           <Route exact path="/">
             <Redirect to="/map" exact />
           </Route>
         </IonRouterOutlet>
         <IonTabBar color="primary" slot="bottom">
-          <IonTabButton tab="tab1" href="/map">
-            <IonIcon icon={mapOutline} />
+          <IonTabButton
+            tab="MapMain"
+            href="/map"
+            onClick={() => {
+              document.getElementById("mapOutline")!.style.color = "white";
+              document.getElementById("listOutline")!.style.color =
+                "rgb(196, 190, 190)";
+            }}
+          >
+            <IonIcon id="mapOutline" icon={mapOutline} />
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/list">
-            <IonIcon icon={listOutline} />
+          <IonTabButton
+            tab="RecordList"
+            href="/list"
+            onClick={() => {
+              document.getElementById("listOutline")!.style.color = "white";
+              document.getElementById("mapOutline")!.style.color =
+                "rgb(196, 190, 190)";
+            }}
+          >
+            <IonIcon id="listOutline" icon={listOutline} />
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

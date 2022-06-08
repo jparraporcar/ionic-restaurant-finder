@@ -1,0 +1,22 @@
+ion-icon {
+  color: white;
+  --ionicon-stroke-weight: 50px;
+}
+
+.starblue {
+  display: flex;
+  align-content: center;
+  background-color: var(--ion-color-primary);
+  padding: 2px;
+  margin: 1px;
+  border-radius: 3px;
+}
+
+.stargrey {
+  display: flex;
+  align-content: center;
+  background-color: grey;
+  padding: 2px;
+  margin: 1px;
+  border-radius: 3px;
+}
