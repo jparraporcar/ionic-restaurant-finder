@@ -37,18 +37,18 @@ const MapMain: React.FC = (props) => {
       return !prevState;
     });
 
-  // const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
-  const baseUrl = "http://localhost:4000";
+  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  // const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     try {
-      // const fetchedPosition = await getPosition();
+      const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
-          latitude: 40.8264691,
-          longitude: -73.9549618,
-          // latitude: fetchedPosition.coords.latitude,
-          // longitude: fetchedPosition.coords.longitude,
+          // latitude: 40.8264691,
+          // longitude: -73.9549618,
+          latitude: fetchedPosition.coords.latitude,
+          longitude: fetchedPosition.coords.longitude,
         })
       );
     } catch (err) {

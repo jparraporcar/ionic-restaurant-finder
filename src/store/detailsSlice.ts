@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type Review = {
+export type Review = {
   id: string;
   url: string;
   text: string;
@@ -14,6 +14,12 @@ type Review = {
   };
 };
 
+export type ReviewsDetails = {
+  reviews: Review[] | null;
+  total: number;
+  possible_languages: string[];
+};
+
 export type TDetails = {
   name: string;
   id: string;
@@ -25,7 +31,7 @@ export type TDetails = {
   categories: {
     alias: string;
     title: string;
-  };
+  }[];
   rating: number;
   coordinates: { latitude: number; longitude: number };
   photos: string[];
@@ -33,12 +39,12 @@ export type TDetails = {
 
 export interface IDetailsState {
   recordDetails: TDetails | null;
-  reviews: Review[] | null;
+  reviewsDetails: ReviewsDetails;
 }
 
 const initialState = {
-  recordDetails: {},
-  reviews: [],
+  recordDetails: {} as TDetails,
+  reviewsDetails: {} as ReviewsDetails,
 };
 
 export const detailsSlice = createSlice({
@@ -54,8 +60,12 @@ export const detailsSlice = createSlice({
       }
       return state;
     },
+    setReviews: (state, action: PayloadAction<ReviewsDetails>) => {
+      state.reviewsDetails = action.payload;
+      return state;
+    },
   },
 });
 
-export const { setRecordDetails } = detailsSlice.actions;
+export const { setRecordDetails, setReviews } = detailsSlice.actions;
 export default detailsSlice.reducer;
