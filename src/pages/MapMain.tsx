@@ -37,7 +37,7 @@ const MapMain: React.FC = (props) => {
       return !prevState;
     });
 
-  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  const baseUrl = "http://3.94.55.119:8080"; // for connecting a physical
   // const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {

@@ -43,7 +43,7 @@ const RecordDetails: FC = (props) => {
   const params = useParams<{ id: string }>();
   console.log(params.id);
 
-  const baseUrl = "http://192.168.0.149:4000"; // for connecting a physical
+  const baseUrl = "http://3.94.55.119:8080"; // for connecting a physical
   // const baseUrl = "http://localhost:4000";
 
   const fetchRecordAndReviewsDetails = async () => {
