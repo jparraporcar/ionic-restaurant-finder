@@ -39,8 +39,6 @@ export const areaSelectedSlice = createSlice({
       state,
       action: PayloadAction<{ latitude: number; longitude: number }>
     ) => {
-      // console.log(`state longitude in reducer action is ${state.longitude}`);
-      // console.log(`state latitude in reducer action is ${state.latitude}`);
       return {
         ...state,
         latitude: action.payload.latitude,
