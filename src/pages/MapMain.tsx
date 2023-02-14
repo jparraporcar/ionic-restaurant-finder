@@ -37,18 +37,14 @@ const MapMain: React.FC = (props) => {
       return !prevState;
     });
 
-  const baseUrl = "http://52.207.36.30:8080"; // COMMENT THESE LINE TO TEST IN WEB BROWSER - LINE 1 OF 6
-  // const baseUrl = "http://localhost:4000"; // UNCOMMENT THESE LINE TO TEST IN WEB BROWSER - LINE 2 OF 6
+  const baseUrl = "http://localhost:4000";
 
   const fetchAndSetPosition = useCallback(async () => {
     try {
-      const fetchedPosition = await getPosition();
       dispatch(
         setPosition({
-          // latitude: 40.8264691, // UNCOMMENT THESE LINE TO TEST IN WEB BROWSER - LINE 3 OF 6
-          // longitude: -73.9549618, // UNCOMMENT THESE LINE TO TEST IN WEB BROWSER - LINE 4 OF 6
-          latitude: fetchedPosition.coords.latitude, // COMMENT THESE LINES TO TEST FROM WEB BROWSER - LINE 5 OF 6
-          longitude: fetchedPosition.coords.longitude, // COMMENT THESE LINE TO TEST IN WEB BROWSER - LINE 6 OF 6
+          latitude: 40.8264691, // TO TEST IN WEB BROWSER
+          longitude: -73.9549618, // TO TEST IN WEB BROWSER
         })
       );
     } catch (err) {

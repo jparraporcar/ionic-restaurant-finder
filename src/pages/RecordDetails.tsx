@@ -43,8 +43,7 @@ const RecordDetails: FC = (props) => {
   const params = useParams<{ id: string }>();
   console.log(params.id);
 
-  const baseUrl = "http://52.207.36.30:8080"; // for connecting a physical
-  // const baseUrl = "http://localhost:4000";
+  const baseUrl = "http://localhost:4000";
 
   const fetchRecordAndReviewsDetails = async () => {
     const responseRecord = await fetch(`${baseUrl}/get-record?id=${params.id}`);

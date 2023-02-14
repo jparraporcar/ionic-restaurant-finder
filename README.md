@@ -1,36 +1,34 @@
+# Necessary commands to execute to run the application in a simulator device
 
-Necessary steps for running the applications:
+1. xcode-select --install
 
-0. xcode-select --install
+   Installing the ios IDE Xcode. If Xcode it's already installed, the following error message will appear:
+   'xcode-select: error: command line tools are already installed, use "Software Update" to install updates'
 
-   ios IDE it is necessary, among others, to run the simulator device
-
-1. npm install -g @ionic/cli
+2. npm install -g @ionic/cli
 
    installing the ionic command line interface
 
-2. npm install
+3. npm install
 
    install dependencies
 
-3. npm run build
+4. npm run build
 
    build web bundle
 
-4. npx cap add ios
+5. npx cap add ios
 
    add capacitor ios pluggins
 
-5. ionic cap sync
+6. ionic cap sync
 
    sync de web assets with the ios code
 
-6. ionic cap run ios -l
+7. ionic cap run ios -l
 
    run the application in a simulator device
 
 # Application backend
 
 The application backend server (express) is running in a AWS ec2 instance
-
-# Necessary steps to install and test the application
