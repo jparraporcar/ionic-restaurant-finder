@@ -28,7 +28,3 @@
 7. ionic cap run ios -l
 
    run the application in a simulator device
-
-# Application backend
-
-The application backend server (express) is running in a AWS ec2 instance
