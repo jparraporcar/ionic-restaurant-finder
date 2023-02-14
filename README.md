@@ -29,7 +29,7 @@
 
    run the application in a simulator device
    
-Below 2 screenshoots of the up running in a local machine
+## Below 2 screenshoots of the app running in a local machine
 
 <img width="387" alt="Card" src="https://user-images.githubusercontent.com/17023422/218709691-05a91d96-20e8-4833-abda-4aa08d47a9c8.png" width="200">     <img width="387" alt="Details" src="https://user-images.githubusercontent.com/17023422/218709812-c0c29796-185e-41e0-b0bd-57bc4ac0efb1.png" width="200">
 
