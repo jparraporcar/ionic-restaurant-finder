@@ -60,6 +60,13 @@ The Restaurant Finder App utilizes various technologies for its implementation:
 
 ## Usage
 
+<figure>
+  <figcaption>App flow</figcaption>
+  <br />
+  <br />
+  <img src="./screenshots/diagram.jpg" alt="App flow">
+</figure>
+
 ## Contact
 
 
