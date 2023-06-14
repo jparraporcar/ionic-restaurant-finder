@@ -69,6 +69,13 @@ The Restaurant Finder App utilizes various technologies for its implementation:
 
 ## Contact
 
+If you want to contact me you can reach me at:
+
+- **Name**: `Jordi Parra Porcar`
+- **Email**: `jordiparraporcar@gmail.com`
+- **LinkedIn**: [`Jordi Parra Porcar`](https://www.linkedin.com/in/jordiparraporcar/)
+
+For any additional questions or comments, please feel free to reach out. Contributions, issues, and feature requests are welcome!
 
 
 
