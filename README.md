@@ -1,36 +1,69 @@
-# Necessary commands to execute to run the application in a simulator device
+# Restaurant Finder App
 
-1. xcode-select --install
+## Table of Contents
+- [Description](#description)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Technologies](#technologies)
+- [Contact](#contact)
 
-   Installing the ios IDE Xcode. If Xcode it's already installed, the following error message will appear:
-   'xcode-select: error: command line tools are already installed, use "Software Update" to install updates'
+## Description
 
-2. npm install -g @ionic/cli
+This application is an Ionic ReactJS app designed to help users find restaurants in their vicinity. The user interacts with a map displaying various restaurants within a certain radius. Details about each restaurant, including reviews, contact information, and menu offerings, can be accessed through pointers on the map. The app is geared towards mobile devices but is also available as a Progressive Web App (PWA).
 
-   installing the ionic command line interface
+## Prerequisites
 
-3. npm install
+Before you begin, ensure you have met the following requirements:
+- You have installed the latest version of [Node.js and npm](https://nodejs.org/)
+- You have a basic understanding of ReactJS and Ionic Framework
+- You have the ability to run a server (located in the `/src` folder, `server.js`) in a separate terminal tab
 
-   install dependencies
+## Installation
 
-4. npm run build
+To install the Restaurant Finder App, follow these steps:
 
-   build web bundle
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/restaurant-finder-app.git
+```
+2. Navigate into the project directory:
+```
+cd restaurant-finder-app
+```
 
-5. npx cap add ios
+3. Install the dependencies:
+```
+npm install
+```
+4.In a separate terminal tab, navigate to the src directory and start the server:
 
-   add capacitor ios pluggins
+```
+cd src
+node server.js
+```
 
-6. ionic cap sync
+5. start the application:
+```
+npm start
+```
 
-   sync de web assets with the ios code
+## Technologies
 
-7. ionic cap run ios -l
+The Restaurant Finder App utilizes various technologies for its implementation:
 
-   run the application in a simulator device
-   
-## Below 2 screenshoots of the app running in a local machine
+1. **[Ionic Framework with React.js](https://ionicframework.com/react)** - A popular cross-platform framework used for building mobile and desktop applications using web technologies (HTML, CSS, JavaScript/TypeScript).
+2. **[Capacitor](https://capacitorjs.com/)** - A cross-platform native runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, and the web.
+3. **[Redux Toolkit](https://redux-toolkit.js.org/)** - The official, opinionated, batteries-included toolset for efficient Redux development.
+4. **[Express.js](https://expressjs.com/)** - A minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+5. **[Pigeon Maps](https://pigeon-maps.js.org/)** - ReactJS maps without external dependencies.
+6. **[Workbox](https://developers.google.com/web/tools/workbox)** - A set of libraries and Node modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps.
 
-<img width="387" alt="Card" src="https://user-images.githubusercontent.com/17023422/218709691-05a91d96-20e8-4833-abda-4aa08d47a9c8.png" width="200">     <img width="387" alt="Details" src="https://user-images.githubusercontent.com/17023422/218709812-c0c29796-185e-41e0-b0bd-57bc4ac0efb1.png" width="200">
+## Usage
+
+## Contact
+
+
+
+
 
 
