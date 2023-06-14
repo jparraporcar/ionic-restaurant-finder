@@ -16,7 +16,6 @@ This application is an Ionic ReactJS app designed to help users find restaurants
 Before you begin, ensure you have met the following requirements:
 - You have installed the latest version of [Node.js and npm](https://nodejs.org/)
 - You have a basic understanding of ReactJS and Ionic Framework
-- You have the ability to run a server (located in the `/src` folder, `server.js`) in a separate terminal tab
 
 ## Installation
 
