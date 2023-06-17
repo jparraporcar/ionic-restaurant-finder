@@ -1,4 +1,4 @@
-# Restaurant Finder App
+# restaurant-lookup
 
 ## Table of Contents
 - [Description](#description)
@@ -9,7 +9,7 @@
 
 ## Description
 
-This application is an Ionic ReactJS app designed to help users find restaurants in their vicinity. The user interacts with a map displaying various restaurants within a certain radius. Details about each restaurant, including reviews, contact information, and menu offerings, can be accessed through pointers on the map. The app is geared towards mobile devices but is also available as a Progressive Web App (PWA).
+This application is an Ionic ReactJS app designed to help users find restaurants in their vicinity. The user interacts with a map displaying various restaurants within a certain radius. Details about each restaurant, including reviews, contact information, and menu offerings, can be accessed through pointers on the map. The app is geared towards mobile devices but at this development stage is presented as a Progressive Web App (PWA).
 
 ## Prerequisites
 
@@ -19,15 +19,15 @@ Before you begin, ensure you have met the following requirements:
 
 ## Installation
 
-To install the Restaurant Finder App, follow these steps:
+To install the restaurant-lookup app, follow these steps:
 
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/restaurant-finder-app.git
+git clone https://github.com/jparraporcar/restaurant-lookup.git
 ```
 2. Navigate into the project directory:
 ```
-cd restaurant-finder-app
+cd restaurant-lookup
 ```
 
 3. Install the dependencies:
@@ -48,7 +48,7 @@ npm start
 
 ## Technologies
 
-The Restaurant Finder App utilizes various technologies for its implementation:
+The restaurant-lookup app utilizes various technologies for its implementation:
 
 1. **[Ionic Framework with React.js](https://ionicframework.com/react)** - A popular cross-platform framework used for building mobile and desktop applications using web technologies (HTML, CSS, JavaScript/TypeScript).
 2. **[Capacitor](https://capacitorjs.com/)** - A cross-platform native runtime that makes it easy to build web apps that run natively on iOS, Android, Electron, and the web.
