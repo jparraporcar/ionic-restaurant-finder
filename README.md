@@ -41,7 +41,7 @@ cd src
 node server.js
 ```
 
-5. start the application:
+5. start the application in development (http://localhost:3000/map):
 ```
 npm start
 ```
